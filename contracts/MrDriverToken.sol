@@ -129,15 +129,15 @@ contract MrDriverToken is BEP20('MrDriver', 'MDR') {
 
         require(curYear >= lastYear, "MDR:: release time is not valid");
         require(curMonth > lastMonth, "MDR:: release time is not valid");
-        require(_totalSupply < maxSupply, "MDR:: all tokens released");
+        require(maxSupply > totalSupply(), "MDR:: all tokens released");
 
         uint diffMonth = (curYear * 12 + curMonth) - (startYear * 12 + startMonth);
-        uint tSupply = maxSupply * diffMonth * monthlyRate / 10000 + _totalSupply;
+        uint tSupply = maxSupply * diffMonth * monthlyRate / 10000 + totalSupply();
 
         if (tSupply > maxSupply) 
             tSupply = maxSupply;
 
-        uint releaseAmount = tSupply - _totalSupply;
+        uint releaseAmount = tSupply - totalSupply();
 
         require(releaseAmount > 0, "MDR:: release amount is not valid" );
 
